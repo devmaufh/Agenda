@@ -119,7 +119,7 @@ function insertUser($data){
 }
 
 function checkUsers($correo,$contrasena){
-    $query="SELECT correo, contrasena FROM adyma WHERE correo='$correo' AND contrasena='$contrasena'";
+    $query="SELECT correo, contrasena FROM usuario WHERE correo='$correo' AND contrasena='$contrasena'";
     $result=Consulta($query);
     if(count($result)>0){
         return true;

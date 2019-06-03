@@ -11,8 +11,8 @@ include_once('../Utilerias/BaseDatos.php');
 $data=json_decode(file_get_contents('php://input'));
 if( !empty($data->correo)&&
     !empty($data->contrasena)){
-        $correo = 'correo'=>$data->correo;
-        $contrasena = 'contrasena'=>$data->contrasena;
+        $correo = $data->correo;
+        $contrasena =$data->contrasena;
         $res=checkUsers($correo, $contrasena);
         
         if($res!=null){
