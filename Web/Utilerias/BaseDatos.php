@@ -118,7 +118,9 @@ function insertUser($data){
     return EjecutaConsecutivo($query,"rfc");
 }
 
-function checkUsers($correo,$contrasena){
+function checkUsers($data){
+    $correo = $data['correo'];
+    $contrasena = $data['contrasena'] ;
     $query="SELECT correo, contrasena FROM usuario WHERE correo='$correo' AND contrasena='$contrasena'";
     $result=Consulta($query);
     if(count($result)>0){
