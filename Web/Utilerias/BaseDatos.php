@@ -1,6 +1,6 @@
 <?php
 try{
-    $Cn=new PDO("pgsql:host=127.0.0.1;port=5432;dbname=escuelas;user=postgres;password=12345678");
+    $Cn=new PDO("pgsql:host=192.168.0.1;port=5432;dbname=adyma;user=postgres;password=hola");
     //$Cn=new PDO("pgsql:host=127.0.0.1;port=5432;dbname=escuelas;user=postgres;password=12345678");
     $Cn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //$Cn->exec("SET CHARACTER SET utf8");
@@ -69,7 +69,7 @@ function checkHash($var,$hash){
 
 
 
-function insertUser($data){
+function insertarUsuario($data){
     $c=$data['correo'];
     $nom=$data['nombre'];
     $pass=$data['pass'];
@@ -84,7 +84,7 @@ function checkUser($correo){
     $query="SELECT * FROM users WHERE correo= '$correo'";    
     return Consulta($query);
 }
-function checkCredentials($correo,$pass){
+function llcheckCredentials($correo,$pass){
     $query="SELECT correo, pass FROM users WHERE correo='$correo'";
     $result=Consulta($query);
     if(count($result)>0){
@@ -107,3 +107,25 @@ function getContacts($data){
         return false;
     }
 }
+
+function insertUser($data){
+    $rfc = $data['rfc'];
+    $nom_user = $data['nom_usuario'];
+    $tel = $data['telefono'];
+    $cor = $data['correo'];
+    $con = $data['contrasena'];
+    $query="INSERT INTO usuario (rfc, nom_usuario, telefono, correo, contrasena) VALUES ('$rfc', '$nom_usr', '$tel', '$cor', '$con') RETURNING rfc";
+    return EjecutaConsecutivo($query,"rfc");
+}
+
+function checkUsers($correo,$contrasena){
+    $query="SELECT correo, contrasena FROM adyma WHERE correo='$correo' AND contrasena='$contrasena'";
+    $result=Consulta($query);
+    if(count($result)>0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+?>
