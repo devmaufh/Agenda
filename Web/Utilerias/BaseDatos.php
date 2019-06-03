@@ -84,7 +84,7 @@ function checkUser($correo){
     $query="SELECT * FROM users WHERE correo= '$correo'";    
     return Consulta($query);
 }
-function checkCredentials($correo,$pass){
+function llcheckCredentials($correo,$pass){
     $query="SELECT correo, pass FROM users WHERE correo='$correo'";
     $result=Consulta($query);
     if(count($result)>0){
@@ -116,6 +116,16 @@ function insertUser($data){
     $con = $data['contrasena'];
     $query="INSERT INTO usuario (rfc, nom_usuario, telefono, correo, contrasena) VALUES ('$rfc', '$nom_user', '$tel', '$cor', '$con') RETURNING rfc";
     return EjecutaConsecutivo($query,"rfc");
+}
+
+function checkUsers($correo,$contrasena){
+    $query="SELECT correo, contrasena FROM adyma WHERE correo='$correo' AND contrasena='$contrasena'";
+    $result=Consulta($query);
+    if(count($result)>0){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 ?>
