@@ -120,7 +120,7 @@ function insertUser($data){
 
 function checkUsers($data){
     $correo = $data['correo'];
-    $contrasena = $data['contrasena'] 
+    $contrasena = $data['contrasena']; 
     $query="SELECT correo, contrasena FROM usuario WHERE correo='$correo' AND contrasena='$contrasena'";
     $result=Consulta($query);
     if(count($result)>0){
@@ -150,7 +150,7 @@ function insertRoom($data){
     return EjecutaConsecutivo($query,"id_sala");
 }
 
-function getRoom($data){
+function getRoom(){
         $res=Consulta("SELECT * FROM sala");
         $response=array();
         foreach ($res as $key => $value) {
@@ -159,7 +159,7 @@ function getRoom($data){
         return $response;
 }
 
-function getEvent($data){
+function getEvent(){
     $res=Consulta("SELECT * FROM evento");
     $response=array();
     foreach ($res as $key => $value) {
