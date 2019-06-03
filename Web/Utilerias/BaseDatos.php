@@ -1,7 +1,7 @@
 <?php
 try{
-    $Cn=new PDO("pgsql:host=192.168.0.1;port=5432;dbname=adyma;user=postgres;password=hola");
-    //$Cn=new PDO("pgsql:host=127.0.0.1;port=5432;dbname=escuelas;user=postgres;password=12345678");
+    //$Cn=new PDO("pgsql:host=192.168.0.1;port=5432;dbname=adyma;user=postgres;password=hola");
+    $Cn=new PDO("pgsql:host=127.0.0.1;port=5432;dbname=adyma;user=postgres;password=12345678");
     $Cn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //$Cn->exec("SET CHARACTER SET utf8");
     $Cn->exec("SET CLIENT_ENCODING TO 'UTF8';");
@@ -114,7 +114,7 @@ function insertUser($data){
     $tel = $data['telefono'];
     $cor = $data['correo'];
     $con = $data['contrasena'];
-    $query="INSERT INTO usuario (rfc, nom_usuario, telefono, correo, contrasena) VALUES ('$rfc', '$nom_usr', '$tel', '$cor', '$con') RETURNING rfc";
+    $query="INSERT INTO usuario (rfc, nom_usuario, telefono, correo, contrasena) VALUES ('$rfc', '$nom_user', '$tel', '$cor', '$con') RETURNING rfc";
     return EjecutaConsecutivo($query,"rfc");
 }
 
