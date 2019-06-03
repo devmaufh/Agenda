@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.adma.adma.Activities.Registro;
+import com.adma.adma.Utils.Utilerias;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         tvRegistrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,Registro.class));
+                startActivity(new Intent(MainActivity.this, Registro.class));
             }
         });
     }
