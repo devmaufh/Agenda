@@ -2,10 +2,13 @@ package com.adma.adma.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.adma.adma.R;
 import com.adma.adma.Utils.Utilerias;
@@ -29,7 +32,7 @@ public class Registro extends AppCompatActivity {
     private TextInputEditText rfc,user,tel,correo,contra,contrac;
     private RequestQueue queue;
     private MaterialButton btnregistro;
-
+    private SharedPreferences prefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +41,6 @@ public class Registro extends AppCompatActivity {
         btnregistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(Registro.this,Home.class));
                 registro();
             }
         });
@@ -58,12 +60,24 @@ public class Registro extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.w("VOLLEY ",response.toString());
+                        try {
+                            if(response.getBoolean("status")){
+                                SharedPreferences.Editor editor=prefs.edit();
+                                editor.putString("rfc",response.getString("usr"));
+                                editor.commit();
+                                startActivity(new Intent(Registro.this,Home.class));
+                            }else{
+                                Toast.makeText(Registro.this, "Error al registrar, intenta más tarde", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Registro.this, "Error al registrar, intenta más tarde", Toast.LENGTH_SHORT).show();
                 Log.w("VOLLEY ",error.getMessage());
             }
         }){
@@ -77,6 +91,7 @@ public class Registro extends AppCompatActivity {
         queue.add(jsonObjectRequest);
     }
     private void bindU(){
+        prefs=getSharedPreferences("user_data", Context.MODE_PRIVATE);
         queue= Volley.newRequestQueue(getApplicationContext());
         rfc=(TextInputEditText)findViewById(R.id.r_rfc);
         user=(TextInputEditText)findViewById(R.id.r_user);

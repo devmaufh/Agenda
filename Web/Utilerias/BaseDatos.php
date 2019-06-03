@@ -127,5 +127,4 @@ function checkUsers($correo,$contrasena){
         return false;
     }
 }
-
 ?>
