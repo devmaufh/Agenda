@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.adma.adma.R;
 import com.adma.adma.Utils.Utilerias;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,6 +21,9 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Registro extends AppCompatActivity {
     private TextInputEditText rfc,user,tel,correo,contra,contrac;
@@ -34,12 +38,11 @@ public class Registro extends AppCompatActivity {
         btnregistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Registro.this,Home.class));
-                //registro();
+                //startActivity(new Intent(Registro.this,Home.class));
+                registro();
             }
         });
     }
-
     private void registro() {
         JSONObject object= new JSONObject();
         try {
@@ -49,9 +52,9 @@ public class Registro extends AppCompatActivity {
             object.put("correo",correo.getText().toString());
             object.put("contrasena",contrac.getText().toString());
         } catch (JSONException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
-        JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.POST, Utilerias.url + "", object,
+        JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.POST, Utilerias.url + "RegistroUsuarios.php", object,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -61,9 +64,16 @@ public class Registro extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.w("VOLLEY ",error.networkResponse.toString());
+                Log.w("VOLLEY ",error.getMessage());
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+        };
         queue.add(jsonObjectRequest);
     }
     private void bindU(){
