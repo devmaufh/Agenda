@@ -137,7 +137,7 @@ function insertRequest($data){
     $id_sal = $data['id_sala'];
     $mat = $data['material'];
     $fec_eve = $data['fecha_evento'];
-    $dur_eve = $data['duracion_evento']
+    $dur_eve = $data['duracion_evento'];
     $query="INSERT INTO solcitud (rfc, id_dependencia, asistecia, id_sala, material, fecha_evento, duracion_evento)
             VALUES ('$rfc', '$id_dep', '$asi', '$id_sal', '$mat', '$fec_eve', '$dur_eve') RETURNING id_solicitud";
     return EjecutaConsecutivo($query,"id_solicitud");
