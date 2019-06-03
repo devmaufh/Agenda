@@ -159,4 +159,12 @@ function getRoom($data){
         return $response;
 }
 
+function getEvent($data){
+    $res=Consulta("SELECT * FROM evento");
+    $response=array();
+    foreach ($res as $key => $value) {
+        $response[$key]=$value;
+    }
+    return $response;
+}
 ?>
